@@ -3,53 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>ASCII Birthday</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     body {
       background: #000;
       color: #fff;
-      margin: 0; padding: 1rem;
+      font-family: monospace;
+      font-size: 0.001em;      /* 40% del tamaño normal */
+      white-space: pre-wrap;
+      padding: 1rem;
+      margin: 0;
       overflow-x: hidden;
     }
-    /* Contenedor que escalamos */
-    #wrapper {
-      transform: scale(0.4);       /* 20% del tamaño original */
-      transform-origin: top left;
-      width: 100%;                  /* 1 / 0.2 = 5 → para que no se recorte */
-    }
-    pre {
-      font-family: monospace;
+    #ascii {
       line-height: 1.1;
-      white-space: pre-wrap;
-      /* Opcional: ya no necesitas font-size tan pequeño */
-      font-size: 4px;              
     }
   </style>
 </head>
 <body>
-  <div id="wrapper">
-    <pre id="ascii"></pre>
-  </div>
+  <pre id="ascii"></pre>
 
   <script>
     fetch('hbd.txt')
       .then(r => r.text())
       .then(text => {
-        text = text.replace(/^\n+/, '');
         const container = document.getElementById('ascii');
-        let pos = 0, CHUNK = 80;
+        let pos = 0;
+        const CHUNK_SIZE = 80;   // prueba con 50, 100, …
+        
         function animar() {
           if (pos < text.length) {
-            container.textContent += text.substr(pos, CHUNK);
-            pos += CHUNK;
+            container.textContent += text.substr(pos, CHUNK_SIZE);
+            pos += CHUNK_SIZE;
+            // hacemos scroll del viewport, no del <pre>
             window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
           }
         }
+        
         requestAnimationFrame(animar);
-      });
+      })
+      .catch(err => console.error(err));
   </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
