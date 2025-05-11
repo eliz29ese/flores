@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     html {
-      zoom: 0.4;
+      zoom: 0.6;
     
     }
     body {
@@ -33,7 +33,7 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 100;   // cuántos caracteres meter por frame
+        const CHUNK_SIZE = 80;   // cuántos caracteres meter por frame
 
         function animar() {
           if (pos < text.length) {
