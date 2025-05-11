@@ -2,40 +2,46 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🎂 Happy Birthday ASCII</title>
-  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <title>ASCII Birthday</title>
   <style>
     body {
-      background-color: black;
-      color: lime;
+      background: #000;
+      color: #0f0;
       font-family: monospace;
-      padding: 20px;
-    }
-    pre {
       white-space: pre-wrap;
-      line-height: 1.2;
+      padding: 1rem;
+    }
+    #ascii {
+      line-height: 1.1;
     }
   </style>
 </head>
 <body>
-  <h2>🎉 Happy Birthday en Python (PyScript) 🎉</h2>
   <pre id="ascii"></pre>
 
-  <py-script>
-import asyncio
-from js import document, fetch
+  <script>
+    // Ajusta la URL si lo sirves desde otro lugar
+    fetch('hbd.txt')
+      .then(r => r.text())
+      .then(text => {
+        const container = document.getElementById('ascii');
+        let i = 0;
+        const delay = 0.0000001; // milisegundos entre carácter y carácter
 
-async def mostrar_ascii():
-    response = await fetch("hbd.txt")
-    text = await response.text()
-    area = document.getElementById("ascii")
-    for char in text:
-        area.innerText += char
-        await asyncio.sleep(0.005)
+        function animar() {
+          if (i < text.length) {
+            container.textContent += text[i++];
+            // desplaza scroll al final si quieres efecto “tipo terminal”
+            container.parentElement.scrollTop = container.parentElement.scrollHeight;
+            setTimeout(animar, delay);
+          }
+        }
 
-asyncio.ensure_future(mostrar_ascii())
-  </py-script>
+        animar();
+      })
+      .catch(err => console.error('No pude cargar hbd.txt:', err));
+  </script>
 </body>
 </html>
+
 
