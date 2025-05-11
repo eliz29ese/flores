@@ -9,7 +9,7 @@
       background: #000;
       color: #fff;
       font-family: monospace;
-      font-size: 0.4em;      /* 40% del tamaño normal */
+      font-size: 0.2em;      /* 40% del tamaño normal */
       white-space: pre-wrap;
       padding: 1rem;
     }
@@ -29,22 +29,24 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 80;   // prueba con 20 o más para mayor velocidad
+        const CHUNK_SIZE = 80;   // cuántos caracteres meter por frame
 
         function animar() {
           if (pos < text.length) {
+            // añadimos un “chunk” de caracteres
             container.textContent += text.substr(pos, CHUNK_SIZE);
             pos += CHUNK_SIZE;
-            requestAnimationFrame(animar);
-          } else {
-            // al terminar TODO, hacemos scroll al final
+            // auto‐scroll
             container.scrollTop = container.scrollHeight;
+            // llamamos al siguiente frame lo antes posible
+            requestAnimationFrame(animar);
           }
         }
 
+        // arrancamos la animación
         requestAnimationFrame(animar);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error('No pude cargar hbd.txt:', err));
   </script>
 </body>
 </html>
