@@ -9,14 +9,14 @@
       background: #000;
       color: #fff;
       font-family: monospace;
-      font-size: 0.1em;      /* 40% del tamaño normal */
+      font-size: 0.01em;      /* 40% del tamaño normal */
       white-space: pre-wrap;
       padding: 1rem;
+      margin: 0;
+      overflow-x: hidden;
     }
     #ascii {
       line-height: 1.1;
-      max-height: 90vh;
-      overflow: auto;        /* deja scroll manual */
     }
   </style>
 </head>
@@ -29,27 +29,25 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 80;   // cuántos caracteres meter por frame
-
+        const CHUNK_SIZE = 80;   // prueba con 50, 100, …
+        
         function animar() {
           if (pos < text.length) {
-            // añadimos un “chunk” de caracteres
             container.textContent += text.substr(pos, CHUNK_SIZE);
             pos += CHUNK_SIZE;
-            // auto‐scroll
-            container.scrollTop = container.scrollHeight;
-            // llamamos al siguiente frame lo antes posible
+            // hacemos scroll del viewport, no del <pre>
+            window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
           }
         }
-
-        // arrancamos la animación
+        
         requestAnimationFrame(animar);
       })
-      .catch(err => console.error('No pude cargar hbd.txt:', err));
+      .catch(err => console.error(err));
   </script>
 </body>
 </html>
+
 
 
 
