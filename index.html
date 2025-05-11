@@ -7,20 +7,21 @@
     body {
       background: #000;
       color: #fff;
-      margin: 0;
-      padding: 1rem;
-      overflow: auto;
+      margin: 0; padding: 1rem;
+      overflow-x: hidden;
     }
-    /* Contenedor que escalamos al 40% */
+    /* Contenedor que escalamos */
     #wrapper {
-      transform: scale(0.1);
+      transform: scale(0.2);       /* 20% del tamaño original */
       transform-origin: top left;
-      width: 250%;           /* 1 / 0.4 = 2.5 → para que el contenido no se recorte */
+      width: 500%;                  /* 1 / 0.2 = 5 → para que no se recorte */
     }
-    #ascii {
+    pre {
       font-family: monospace;
       line-height: 1.1;
       white-space: pre-wrap;
+      /* Opcional: ya no necesitas font-size tan pequeño */
+      font-size: 4px;              
     }
   </style>
 </head>
@@ -33,21 +34,19 @@
     fetch('hbd.txt')
       .then(r => r.text())
       .then(text => {
-        // eliminar líneas en blanco iniciales
         text = text.replace(/^\n+/, '');
         const container = document.getElementById('ascii');
         let pos = 0, CHUNK = 80;
-
         function animar() {
           if (pos < text.length) {
             container.textContent += text.substr(pos, CHUNK);
             pos += CHUNK;
+            window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
           }
         }
         requestAnimationFrame(animar);
-      })
-      .catch(console.error);
+      });
   </script>
 </body>
 </html>
