@@ -32,7 +32,7 @@ async def mostrar_ascii():
     area = document.getElementById("ascii")
     for char in text:
         area.innerText += char
-        await asyncio.sleep(0.005)  # velocidad de animación
+        await asyncio.sleep(0.005)
 
 asyncio.ensure_future(mostrar_ascii())
   </py-script>
