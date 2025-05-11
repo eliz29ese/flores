@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday ASCII</title>
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  <style>
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+    #ascii {
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎉 ASCII Birthday (en Python!) 🎉</h2>
+  <pre id="ascii"></pre>
+
+  <py-script>
+import asyncio
+from js import document, fetch
+
+async def main():
+    # Obtener el contenido de hbd.txt
+    response = await fetch("hbd.txt")
+    text = await response.text()
+    ascii_area = document.getElementById("ascii")
+    for char in text:
+        ascii_area.innerText += char
+        await asyncio.sleep(0.005)  # velocidad de animación
+asyncio.ensure_future(main())
+  </py-script>
+</body>
+</html>
