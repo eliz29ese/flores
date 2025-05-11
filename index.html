@@ -13,7 +13,7 @@
     }
     /* Contenedor que escalamos al 40% */
     #wrapper {
-      transform: scale(0.4);
+      transform: scale(0.1);
       transform-origin: top left;
       width: 250%;           /* 1 / 0.4 = 2.5 → para que el contenido no se recorte */
     }
@@ -36,7 +36,7 @@
         // eliminar líneas en blanco iniciales
         text = text.replace(/^\n+/, '');
         const container = document.getElementById('ascii');
-        let pos = 0, CHUNK = 50;
+        let pos = 0, CHUNK = 80;
 
         function animar() {
           if (pos < text.length) {
