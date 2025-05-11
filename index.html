@@ -12,11 +12,11 @@
       font-size: 0.01em;      /* 40% del tamaño normal */
       white-space: pre-wrap;
       padding: 1rem;
-      margin: 0;
-      overflow-x: hidden;
     }
     #ascii {
       line-height: 1.1;
+      max-height: 90vh;
+      overflow: auto;        /* deja scroll manual */
     }
   </style>
 </head>
@@ -29,24 +29,29 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 80;   // prueba con 50, 100, …
-        
+        const CHUNK_SIZE = 80;   // prueba con 20 o más para mayor velocidad
+
         function animar() {
           if (pos < text.length) {
             container.textContent += text.substr(pos, CHUNK_SIZE);
             pos += CHUNK_SIZE;
-            // hacemos scroll del viewport, no del <pre>
-            window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
+          } else {
+            // al terminar TODO, hacemos scroll al final
+            container.scrollTop = container.scrollHeight;
           }
         }
-        
+
         requestAnimationFrame(animar);
       })
       .catch(err => console.error(err));
   </script>
 </body>
 </html>
+
+
+
+
 
 
 
