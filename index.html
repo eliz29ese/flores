@@ -7,11 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     html {
-      /* Zoom al 40% en Chrome/Edge/Explorer (sintaxis no estándar pero muy soportada) */
       zoom: 0.4;
-      /* Alternativa estándar: transform (pero afecta flujos de layout) */
-      /* transform: scale(0.4);
-         transform-origin: 0 0; */
+    
     }
     body {
       background: #000;
@@ -36,7 +33,7 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 10;   // cuántos caracteres meter por frame
+        const CHUNK_SIZE = 100;   // cuántos caracteres meter por frame
 
         function animar() {
           if (pos < text.length) {
