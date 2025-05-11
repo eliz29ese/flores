@@ -20,13 +20,12 @@
   <pre id="ascii"></pre>
 
   <script>
-    // Ajusta la URL si lo sirves desde otro lugar
     fetch('hbd.txt')
       .then(r => r.text())
       .then(text => {
         const container = document.getElementById('ascii');
         let i = 0;
-        const delay = 0.0000000000000001; // milisegundos entre carácter y carácter
+        const delay = 0.0000000000000000000000000000000000000000000001; // milisegundos entre carácter y carácter
 
         function animar() {
           if (i < text.length) {
