@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>ASCII Birthday</title>
-  <!-- 1) MetaViewport para móviles; 2) CSS Zoom para desktop -->
   <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     html {
-      zoom: 0.6;
-    
+      zoom: 0.4;             /* zoom al 40% en desktop */
     }
     body {
       background: #000;
@@ -20,7 +18,7 @@
     #ascii {
       line-height: 1.1;
       max-height: 90vh;
-      overflow: auto;
+      overflow: auto;        /* deja scroll manual */
     }
   </style>
 </head>
@@ -33,27 +31,26 @@
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 80;   // cuántos caracteres meter por frame
+        const CHUNK_SIZE = 80;   // prueba con 20 o más para mayor velocidad
 
         function animar() {
           if (pos < text.length) {
-            // añadimos un “chunk” de caracteres
             container.textContent += text.substr(pos, CHUNK_SIZE);
             pos += CHUNK_SIZE;
-            // auto‐scroll
-            container.scrollTop = container.scrollHeight;
-            // llamamos al siguiente frame lo antes posible
             requestAnimationFrame(animar);
+          } else {
+            // al terminar TODO, hacemos scroll al final
+            container.scrollTop = container.scrollHeight;
           }
         }
 
-        // arrancamos la animación
         requestAnimationFrame(animar);
       })
-      .catch(err => console.error('No pude cargar hbd.txt:', err));
+      .catch(err => console.error(err));
   </script>
 </body>
 </html>
+
 
 
 
