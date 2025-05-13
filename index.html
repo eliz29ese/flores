@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>flores</title>
+  <title>Flores con colores</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     body {
@@ -18,11 +19,14 @@
     #ascii {
       line-height: 1.1;
     }
+    .ascii-char {
+      display: inline;
+      transition: color 0.5s ease;
+    }
   </style>
 </head>
 <body>
-  <pre id="ascii"></pre>
-
+  <div id="ascii"></div>
   <script>
     fetch('flores.txt')
       .then(r => r.text())
@@ -31,22 +35,52 @@
         let pos = 0;
         const CHUNK_SIZE = 80;   
         
+        function getRandomColor() {
+          // Generamos colores pastel/brillantes que sean visibles en fondo negro
+          const hue = Math.floor(Math.random() * 360);
+          return `hsl(${hue}, 100%, 70%)`;
+        }
+        
         function animar() {
           if (pos < text.length) {
-            container.textContent += text.substr(pos, CHUNK_SIZE);
+            const chunk = text.substr(pos, CHUNK_SIZE);
+            
+            // Para cada carácter en el chunk, creamos un span con color aleatorio
+            for (let i = 0; i < chunk.length; i++) {
+              const char = chunk[i];
+              const span = document.createElement('span');
+              span.className = 'ascii-char';
+              span.textContent = char;
+              span.style.color = getRandomColor();
+              container.appendChild(span);
+            }
+            
             pos += CHUNK_SIZE;
             window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
           }
         }
         
+        // Función para cambiar los colores periódicamente
+        function cambiarColores() {
+          const chars = document.querySelectorAll('.ascii-char');
+          chars.forEach(char => {
+            // Solo cambiamos el color de algunos caracteres en cada ciclo
+            if (Math.random() > 0.9) {
+              char.style.color = getRandomColor();
+            }
+          });
+          
+          setTimeout(cambiarColores, 200);  // Cambiamos colores cada 200ms
+        }
+        
         requestAnimationFrame(animar);
+        setTimeout(cambiarColores, 1000);   // Comenzamos a cambiar colores después de 1 segundo
       })
       .catch(err => console.error(err));
   </script>
 </body>
 </html>
-
 
 
 
