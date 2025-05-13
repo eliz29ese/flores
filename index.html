@@ -2,14 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>ASCII Birthday</title>
+  <title>flores</title>
   <meta name="viewport" content="width=device-width, initial-scale=0.4">
   <style>
     body {
       background: #000;
       color: #fff;
       font-family: monospace;
-      font-size: 0.001em;      /* 40% del tamaño normal */
+      font-size: 0.001em;      
       white-space: pre-wrap;
       padding: 1rem;
       margin: 0;
@@ -24,18 +24,17 @@
   <pre id="ascii"></pre>
 
   <script>
-    fetch('hbd.txt')
+    fetch('flores.txt')
       .then(r => r.text())
       .then(text => {
         const container = document.getElementById('ascii');
         let pos = 0;
-        const CHUNK_SIZE = 80;   // prueba con 50, 100, …
+        const CHUNK_SIZE = 80;   
         
         function animar() {
           if (pos < text.length) {
             container.textContent += text.substr(pos, CHUNK_SIZE);
             pos += CHUNK_SIZE;
-            // hacemos scroll del viewport, no del <pre>
             window.scrollTo(0, document.body.scrollHeight);
             requestAnimationFrame(animar);
           }
